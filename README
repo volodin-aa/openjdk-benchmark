@@ -1,0 +1,5 @@
+Fast equalsIgnoreCase(...) test.
+
+Run with maven:
+
+mvn clean install exec:exec
