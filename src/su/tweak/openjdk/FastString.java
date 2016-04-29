@@ -204,11 +204,14 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 			if (c1 == c2) {
 				continue;
 			}
-			// If characters don't match but case may be ignored,
-			// try converting both characters to uppercase.
-			// If the results match, then the comparison scan should
-			// continue.
+			
+			// Try convert c1 to upper case and compare with c2
 			char u1 = Character.toUpperCase(c1);
+			if (u1 == c2) {
+				continue;
+			}
+			
+			// Try convert c2 to upper case and compare with u1
 			char u2 = Character.toUpperCase(c2);
 			if (u1 == u2) {
 				continue;

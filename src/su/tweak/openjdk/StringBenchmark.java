@@ -25,7 +25,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 public class StringBenchmark {
 
-    private static final String _STRING = "String";
+    private static final String _STRING = "STRING";
     private static final String STRING = "string";
 
     private static String _string = new String(_STRING.toCharArray());

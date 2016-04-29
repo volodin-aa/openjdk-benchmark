@@ -2,4 +2,14 @@ Fast equalsIgnoreCase(...) test.
 
 Run with maven:
 
-mvn clean install exec:exec
+# mvn clean install exec:exec
+
+# Run complete. Total time: 00:04:02
+
+Benchmark                        Mode  Cnt         Score        Error  Units
+StringBenchmark.constConst      thrpt   20  21252588,687 ▒ 154209,727  ops/s
+StringBenchmark.constConstFast  thrpt   20  37880121,098 ▒ 240048,282  ops/s
+StringBenchmark.newNew          thrpt   20  12505381,746 ▒ 413280,860  ops/s
+StringBenchmark.newNewFast      thrpt   20  17425782,845 ▒ 454500,870  ops/s
+StringBenchmark.varVar          thrpt   20  20904284,721 ▒ 225403,391  ops/s
+StringBenchmark.varVarFast      thrpt   20  37767202,302 ▒ 177973,970  ops/s
