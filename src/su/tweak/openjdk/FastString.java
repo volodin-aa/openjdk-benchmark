@@ -210,7 +210,6 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 		return (this == anotherString) ? true
 				: (anotherString != null) 
 				&& (anotherString.value.length == value.length) 
-//                && regionMatches(true, 0, anotherString, 0, length());
 				&& fullMatches(anotherString, length());
 	}
 
