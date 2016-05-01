@@ -1,5 +1,38 @@
-Fast equalsIgnoreCase(...) test.
+Fast equalsIgnoreCase(...) for JDK 9 test.
+
+*Fast - tests optimized version
+*Jdk9 - tests extracted version from JDK 9
+*String - tests java String
 
 Run with maven:
 
-mvn clean install exec:exec
+# mvn clean install exec:exec
+
+# JMH 1.12 (released 30 days ago)
+# VM version: JDK 9-ea, VM 9-ea+116
+# VM invoker: C:\Program Files\Java\jdk-9\bin\java.exe
+# VM options: <none>
+# Warmup: 20 iterations, 1 s each
+# Measurement: 20 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+
+Benchmark                                         Mode  Cnt   Score   Error  Units
+StringEqualsIgnoreCaseBenchmark.constConstFast    avgt   20  23,739 ▒ 0,324  ns/op
+StringEqualsIgnoreCaseBenchmark.constConstJdk9    avgt   20  34,631 ▒ 0,071  ns/op
+StringEqualsIgnoreCaseBenchmark.constConstString  avgt   20  21,753 ▒ 0,055  ns/op
+StringEqualsIgnoreCaseBenchmark.initNewFast       avgt   20  29,988 ▒ 0,407  ns/op
+StringEqualsIgnoreCaseBenchmark.initNewJdk9       avgt   20  29,910 ▒ 0,238  ns/op
+StringEqualsIgnoreCaseBenchmark.initNewString     avgt   20  20,566 ▒ 0,429  ns/op
+StringEqualsIgnoreCaseBenchmark.newNewFast        avgt   20  70,239 ▒ 0,952  ns/op
+StringEqualsIgnoreCaseBenchmark.newNewJdk9        avgt   20  98,542 ▒ 0,333  ns/op
+StringEqualsIgnoreCaseBenchmark.newNewString      avgt   20  55,009 ▒ 1,068  ns/op
+StringEqualsIgnoreCaseBenchmark.varVarFast        avgt   20  23,269 ▒ 0,108  ns/op
+StringEqualsIgnoreCaseBenchmark.varVarJdk9        avgt   20  35,163 ▒ 0,412  ns/op
+StringEqualsIgnoreCaseBenchmark.varVarString      avgt   20  23,777 ▒ 0,156  ns/op
+------------------------------------------------------------------------
+Self test:
+String: "string".equalsIgnoreCase("String") == true
+FastString: "string".equalsIgnoreCase("String") == true
+Jdk9String: "string".equalsIgnoreCase("String") == true

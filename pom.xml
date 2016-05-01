@@ -3,7 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>su.tweak.openjdk</groupId>
 	<artifactId>string-benchmark</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.openjdk.jmh</groupId>
@@ -15,11 +20,11 @@
 			<artifactId>jmh-generator-annprocess</artifactId>
 			<version>1.12</version>
 		</dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -57,7 +62,7 @@
 					<arguments>
 						<argument>-classpath</argument>
 						<classpath />
-						<argument>su.tweak.openjdk.StringBenchmark</argument>
+						<argument>su.tweak.openjdk.StringEqualsIgnoreCaseBenchmark</argument>
 					</arguments>
 				</configuration>
 			</plugin>

@@ -50,7 +50,7 @@ import java.io.ObjectStreamField;
  * Based on http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java
  */
 
-public final class FastString implements java.io.Serializable, Comparable<FastString>, CharSequence {
+public final class Jdk9String implements java.io.Serializable, Comparable<Jdk9String>, CharSequence {
 	/** The value is used for character storage. */
     private final byte[] value;
 
@@ -146,7 +146,7 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 	 * @param original
 	 *            A {@code String}
 	 */
-	public FastString(FastString original) {
+	public Jdk9String(Jdk9String original) {
         this.value = original.value;
         this.coder = original.coder;
         this.hash = original.hash;
@@ -159,11 +159,11 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
      * Stores the char[] value into a byte[] that each byte represents
      * the8 low-order bits of the corresponding character, if the char[]
      * contains only latin1 character. Or a byte[] that stores all
-     * characters in their byte sequences defined by the {@code FastStringUTF16}.
+     * characters in their byte sequences defined by the {@code Jdk9StringUTF16}.
      */
-	FastString(char[] value, int off, int len) {
+	Jdk9String(char[] value, int off, int len) {
         this.coder = UTF16;
-        this.value = FastStringUTF16.toBytes(value, off, len);
+        this.value = Jdk9StringUTF16.toBytes(value, off, len);
     }
 
 	/**
@@ -175,7 +175,7 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 	 * @param value
 	 *            The initial value of the string
 	 */
-    public FastString(char value[]) {
+    public Jdk9String(char value[]) {
         this(value, 0, value.length);
     }
 
@@ -206,12 +206,11 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 	 *
 	 * @see #equals(Object)
 	 */
-	public boolean equalsIgnoreCase(FastString anotherString) {
+	public boolean equalsIgnoreCase(Jdk9String anotherString) {
 		return (this == anotherString) ? true
 				: (anotherString != null) 
 				&& (anotherString.value.length == value.length) 
-//                && regionMatches(true, 0, anotherString, 0, length());
-				&& fullMatches(anotherString, length());
+                && regionMatches(true, 0, anotherString, 0, length());
 	}
 
 	/**
@@ -344,7 +343,7 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
      *          exactly matches the specified subregion of the string argument;
      *          {@code false} otherwise.
      */
-    public boolean regionMatches(int toffset, FastString other, int ooffset, int len) {
+    public boolean regionMatches(int toffset, Jdk9String other, int ooffset, int len) {
         byte tv[] = value;
         byte ov[] = other.value;
         // Note: toffset, ooffset, or len might be near -1>>>1.
@@ -367,15 +366,15 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
         } else {
             if (coder() == LATIN1) {
                 while (len-- > 0) {
-                    if (FastStringLatin1.getChar(tv, toffset++) !=
-                        FastStringUTF16.getChar(ov, ooffset++)) {
+                    if (Jdk9StringLatin1.getChar(tv, toffset++) !=
+                        Jdk9StringUTF16.getChar(ov, ooffset++)) {
                         return false;
                     }
                 }
             } else {
                 while (len-- > 0) {
-                    if (FastStringUTF16.getChar(tv, toffset++) !=
-                        FastStringLatin1.getChar(ov, ooffset++)) {
+                    if (Jdk9StringUTF16.getChar(tv, toffset++) !=
+                        Jdk9StringLatin1.getChar(ov, ooffset++)) {
                         return false;
                     }
                 }
@@ -435,7 +434,7 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
      *          argument.
      */
     public boolean regionMatches(boolean ignoreCase, int toffset,
-    		FastString other, int ooffset, int len) {
+    		Jdk9String other, int ooffset, int len) {
         if (!ignoreCase) {
             return regionMatches(toffset, other, ooffset, len);
         }
@@ -449,25 +448,12 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
         byte ov[] = other.value;
         if (coder() == other.coder()) {
             return isLatin1()
-              ? FastStringLatin1.regionMatchesCI(tv, toffset, ov, ooffset, len)
-              : FastStringUTF16.regionMatchesCI(tv, toffset, ov, ooffset, len);
+              ? Jdk9StringLatin1.regionMatchesCI(tv, toffset, ov, ooffset, len)
+              : Jdk9StringUTF16.regionMatchesCI(tv, toffset, ov, ooffset, len);
         }
         return isLatin1()
-              ? FastStringLatin1.regionMatchesCI_UTF16(tv, toffset, ov, ooffset, len)
-              : FastStringUTF16.regionMatchesCI_Latin1(tv, toffset, ov, ooffset, len);
-    }
-
-    public boolean fullMatches(FastString other, int len) {
-        byte tv[] = value;
-        byte ov[] = other.value;
-        if (coder() == other.coder()) {
-            return isLatin1()
-              ? FastStringLatin1.fullMatchesCI(tv, ov, len)
-              : FastStringUTF16.fullMatchesCI(tv, ov, len);
-        }
-        return isLatin1()
-              ? FastStringLatin1.fullMatchesCI_UTF16(tv, ov, len)
-              : FastStringUTF16.fullMatchesCI_Latin1(tv, ov, len);
+              ? Jdk9StringLatin1.regionMatchesCI_UTF16(tv, toffset, ov, ooffset, len)
+              : Jdk9StringUTF16.regionMatchesCI_Latin1(tv, toffset, ov, ooffset, len);
     }
 
 	@Override
@@ -482,14 +468,14 @@ public final class FastString implements java.io.Serializable, Comparable<FastSt
 	}
 
 	@Override
-	public int compareTo(FastString arg0) {
+	public int compareTo(Jdk9String arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
     public char[] toCharArray() {
-        return isLatin1() ? FastStringLatin1.toChars(value)
-                          : FastStringUTF16.toChars(value);
+        return isLatin1() ? Jdk9StringLatin1.toChars(value)
+                          : Jdk9StringUTF16.toChars(value);
     }
 
     /*
