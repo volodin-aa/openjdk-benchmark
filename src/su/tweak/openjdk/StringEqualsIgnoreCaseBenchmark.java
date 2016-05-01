@@ -138,8 +138,8 @@ public class StringEqualsIgnoreCaseBenchmark {
 	 * 
 	 */
 	@Benchmark
-	public String initNewString() {
-		return new String(string.toCharArray());
+	public int initNewString() {
+		return (new String(string.toCharArray())).length() + (new String(_string.toCharArray())).length();
 	}
 
 	/*
@@ -147,8 +147,8 @@ public class StringEqualsIgnoreCaseBenchmark {
 	 * 
 	 */
 	@Benchmark
-	public FastString initNewFast() {
-		return new FastString(fastString.toCharArray());
+	public int initNewFast() {
+		return (new FastString(fastString.toCharArray())).length() + (new FastString(_fastString.toCharArray())).length();
 	}
 
 	/*
@@ -156,8 +156,8 @@ public class StringEqualsIgnoreCaseBenchmark {
 	 * 
 	 */
 	@Benchmark
-	public Jdk9String initNewJdk9() {
-		return new Jdk9String(jdk9String.toCharArray());
+	public int initNewJdk9() {
+		return (new Jdk9String(jdk9String.toCharArray())).length() + (new Jdk9String(_jdk9String.toCharArray())).length();
 	}
 
 	/*
